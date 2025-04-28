@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { goalAPI } from '../../utils/api';
 import GoalForm from './GoalForm';
 
@@ -8,20 +7,15 @@ const Goals = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [filters, setFilters] = useState({
-    status: 'active',
-    priority: '',
-    category: ''
-  });
 
   useEffect(() => {
     fetchGoals();
-  }, [filters]);
+  }, []);
 
   const fetchGoals = async () => {
     try {
       setLoading(true);
-      const response = await goalAPI.getAll(filters);
+      const response = await goalAPI.getAll({ status: 'active' });
       setGoals(response.data.data.goals);
     } catch (err) {
       setError(err.response?.data?.message || 'Error fetching goals');
@@ -30,50 +24,10 @@ const Goals = () => {
     }
   };
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this goal?')) {
-      return;
-    }
-
-    try {
-      await goalAPI.delete(id);
-      fetchGoals();
-    } catch (err) {
-      setError(err.response?.data?.message || 'Error deleting goal');
-    }
-  };
-
-  const getProgressColor = (percentage) => {
-    if (percentage >= 100) return 'bg-green-600';
-    if (percentage >= 75) return 'bg-blue-600';
-    if (percentage >= 50) return 'bg-yellow-600';
-    return 'bg-red-600';
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Financial Goals</h1>
-          <p className="text-gray-600 mt-1">Track and achieve your financial goals</p>
-        </div>
+        <h1 className="text-2xl font-bold">Financial Goals</h1>
         <button
           onClick={() => setShowForm(true)}
           className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
@@ -82,65 +36,8 @@ const Goals = () => {
         </button>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Status
-            </label>
-            <select
-              name="status"
-              value={filters.status}
-              onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            >
-              <option value="active">Active</option>
-              <option value="completed">Completed</option>
-              <option value="paused">Paused</option>
-              <option value="">All</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Priority
-            </label>
-            <select
-              name="priority"
-              value={filters.priority}
-              onChange={handleFilterChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            >
-              <option value="">All</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Category
-            </label>
-            <input
-              type="text"
-              name="category"
-              value={filters.category}
-              onChange={handleFilterChange}
-              placeholder="Filter by category"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-      </div>
+      {error && <div className="text-red-600 mb-4">{error}</div>}
 
-      {/* Error Message */}
-      {error && (
-        <div className="mb-6 p-4 bg-red-100 text-red-600 rounded-md">
-          {error}
-        </div>
-      )}
-
-      {/* Goals Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {goals.map(goal => {
           const progressPercentage = (goal.currentAmount / goal.targetAmount) * 100;
@@ -174,7 +71,7 @@ const Goals = () => {
                   </div>
                   <div className="w-full h-2 bg-gray-200 rounded-full">
                     <div
-                      className={`h-full rounded-full ${getProgressColor(progressPercentage)}`}
+                      className={`h-full rounded-full ${progressPercentage >= 75 ? 'bg-blue-600' : progressPercentage >= 50 ? 'bg-yellow-600' : 'bg-red-600'}`}
                       style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                     ></div>
                   </div>
@@ -233,7 +130,7 @@ const Goals = () => {
                     View Details
                   </Link>
                   <button
-                    onClick={() => handleDelete(goal._id)}
+                    onClick={() => alert('Delete feature under development')}
                     className="text-red-600 hover:text-red-800"
                   >
                     Delete
@@ -245,7 +142,6 @@ const Goals = () => {
         })}
       </div>
 
-      {/* Goal Form Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg w-full max-w-md">
