@@ -1,53 +1,69 @@
-# WhatsApp Financial Management Bot
+# WhatsApp Financial Management Bot (Enhanced Version)
 
-A comprehensive financial management system with WhatsApp integration that helps users track expenses, manage budgets, and achieve financial goals.
+A comprehensive financial management system with advanced WhatsApp integration, featuring enhanced NLP capabilities, voice message support, and intelligent financial analysis.
 
-## Features
+## Enhanced Features
 
-### WhatsApp Integration
-- Natural Language Processing for understanding user messages
-- Automated expense tracking through WhatsApp
-- Real-time financial updates and notifications
-- Smart financial assistant capabilities
+### Advanced NLP Capabilities
+- Sentiment analysis for financial stress detection
+- Context-aware conversation management
+- Automatic typo correction for Indonesian language
+- Regional dialect and slang support
+- Financial terms dictionary and synonyms
 
-### Financial Management
-- Transaction tracking and categorization
-- Budget planning and monitoring
-- Financial goal setting and tracking
-- Comprehensive financial reports and analytics
-- Automated savings recommendations
+### Smart Financial Features
+- ML-based expense categorization
+- Predictive spending pattern analysis
+- Personalized savings recommendations
+- Detailed goal tracking
+- Automated recurring transactions
+- Dynamic budget adjustments
 
-### User Interface
-- Modern, responsive web interface
-- Real-time dashboard with financial overview
-- Detailed transaction history
-- Budget visualization and analytics
-- Goal progress tracking
-- Custom reports generation
+### Advanced User Interaction
+- Voice message support for transaction recording
+- Receipt image scanning (coming soon)
+- Interactive buttons and list messages
+- Smart quick replies based on user history
+- Customizable reminder schedules
+- Group expense tracking
 
-## Technology Stack
+### Financial Education
+- Daily financial tips
+- Goal achievement gamification
+- Market updates and financial news
+- Investment education content
+- Debt management advice
 
-### Backend
-- Node.js + Express.js
-- MongoDB (Database)
-- WhatsApp Web.js (WhatsApp integration)
-- NLP.js (Natural Language Processing)
-- JWT (Authentication)
-- Socket.io (Real-time updates)
+### Integration Capabilities
+- Excel/Google Sheets/PDF export
+- QR code payment support
 
-### Frontend
-- React.js
-- Redux (State management)
-- Tailwind CSS (Styling)
-- Chart.js (Data visualization)
-- Axios (API calls)
+### Enhanced Security
+- Large transaction verification
+- Suspicious activity detection
+- End-to-end encryption
+- IP-based access control
+
+### Performance Optimizations
+- Message queue system
+- Request caching
+- Response time optimization
+- Batch report processing
+
+### Advanced Analytics
+- Enhanced data visualization
+- Comparative user analysis
+- Custom report builder
+- Tax calculation and reporting
+- Financial health scoring
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (>= 14.0.0)
 - MongoDB
-- WhatsApp account for bot integration
-- npm or yarn package manager
+- Google Cloud account (for Speech-to-Text)
+- WhatsApp account for bot
+- FFmpeg (for voice message processing)
 
 ## Installation
 
@@ -69,73 +85,111 @@ cd frontend
 npm install
 ```
 
-4. Create environment variables:
+4. Set up environment variables:
+```bash
+cd backend
+cp .env.example .env
+```
+Edit .env with your configuration values.
 
-Backend (.env):
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/financial_bot
-JWT_SECRET=your_jwt_secret_key
-NODE_ENV=development
-```
-
-Frontend (.env):
-```
-REACT_APP_API_URL=http://localhost:5000/api
-```
+5. Set up Google Cloud credentials:
+- Create a project in Google Cloud Console
+- Enable Speech-to-Text API
+- Download credentials JSON file
+- Set GOOGLE_APPLICATION_CREDENTIALS in .env
 
 ## Running the Application
 
-1. Start the backend server:
+1. Start MongoDB:
+```bash
+mongod
+```
+
+2. Start the backend server:
 ```bash
 cd backend
 npm run dev
 ```
 
-2. Start the frontend application:
+3. Start the frontend application:
 ```bash
 cd frontend
 npm start
 ```
 
-3. Access the application at http://localhost:8000
+4. Access the application at http://localhost:3000
 
-## WhatsApp Bot Setup
+## WhatsApp Integration Setup
 
 1. Log in to the web interface
-2. Navigate to the WhatsApp Activation page
-3. Scan the displayed QR code with your WhatsApp
-4. Start using the bot with your activated number
+2. Navigate to WhatsApp Activation
+3. Scan the QR code with your WhatsApp
+4. Start using the enhanced bot features
 
-## Bot Commands
+## Enhanced Bot Commands
 
-The bot understands natural language, but here are some example commands:
+The bot now understands natural language better, but here are some example commands:
 
-- Record expense: "catat pengeluaran 50ribu untuk makan"
-- Record income: "catat pemasukan 5juta dari gaji"
-- Check balance: "cek saldo"
-- View budget: "lihat budget"
-- Set budget: "atur budget makan 2juta"
-- View goals: "lihat target tabungan"
-- Create goal: "buat target menabung 10juta untuk liburan"
+### Transaction Recording
+```
+catat pengeluaran 50rb untuk makan
+catat pemasukan 5jt dari gaji
+```
 
-## Project Structure
+### Voice Messages
+```
+[Send voice message describing transaction]
+```
 
+### Budget Management
+```
+atur budget makan 2jt
+cek sisa anggaran
+```
+
+### Goal Tracking
+```
+target menabung 10jt untuk liburan
+cek progress tabungan
+```
+
+### Financial Reports
+```
+laporan keuangan bulan ini
+analisis pengeluaran
+```
+
+## Security Features
+
+- JWT-based authentication
+- Password hashing with bcrypt
+- Rate limiting
+- Input validation
+- Session management
+- Data encryption
+- Secure WhatsApp connection
+
+## Development
+
+### Project Structure
 ```
 .
 ├── backend/
 │   ├── src/
-│   │   ├── config/
 │   │   ├── controllers/
 │   │   ├── models/
 │   │   ├── routes/
-│   │   ├── services/
 │   │   ├── utils/
 │   │   └── whatsapp/
-│   ├── package.json
+│   │       ├── nlp/
+│   │       │   ├── sentimentAnalyzer.js
+│   │       │   ├── contextManager.js
+│   │       │   ├── dialectHandler.js
+│   │       │   └── financialDictionary.js
+│   │       ├── enhancedMessageProcessor.js
+│   │       └── enhancedSetup.js
 │   └── server.js
 └── frontend/
-    ├── public/
     ├── src/
     │   ├── components/
     │   ├── pages/
@@ -144,34 +198,60 @@ The bot understands natural language, but here are some example commands:
     └── package.json
 ```
 
-## Security Features
+### Running Tests
+```bash
+cd backend
+npm test
+```
 
-- JWT-based authentication
-- Password hashing
-- Rate limiting
-- Input validation
-- Session management
-- Data encryption
-- Secure WhatsApp connection
-
-## Contributing
-
+### Contributing
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## Performance Considerations
+
+- Use PM2 for process management in production
+- Enable caching for frequently accessed data
+- Monitor memory usage with WhatsApp client
+- Implement request rate limiting
+- Use connection pooling for MongoDB
+
+## Troubleshooting
+
+Common issues and solutions:
+
+1. WhatsApp Connection Issues
+   - Ensure stable internet connection
+   - Check WhatsApp session status
+   - Clear WhatsApp session and rescan QR
+
+2. Voice Message Processing
+   - Verify FFmpeg installation
+   - Check Google Cloud credentials
+   - Ensure proper audio format
+
+3. Database Connection
+   - Verify MongoDB service is running
+   - Check connection string
+   - Ensure proper authentication
+
+## Support
+
+For support:
+- Create an issue in the repository
+- Email: support@example.com
+- Documentation: [Wiki](link-to-wiki)
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
-
-For support, email support@example.com or create an issue in the repository.
-
 ## Acknowledgments
 
 - WhatsApp Web.js for WhatsApp integration
+- Google Cloud for Speech-to-Text
 - NLP.js for natural language processing
-- The React and Node.js communities for excellent documentation
+- The React and Node.js communities
