@@ -1,8 +1,9 @@
+const logger = require('../../utils/logger');
 const enhancedNLPHandler = require('./nlp/enhancedNLPHandler');
 const Transaction = require('../models/transaction.model');
 const Budget = require('../models/budget.model');
 const Goal = require('../models/goal.model');
-const logger = require('../utils/logger');
+const groupChatManager = require('../whatsapp/groupChatManager');
 
 class EnhancedMessageProcessor {
   constructor() {
@@ -121,6 +122,11 @@ class EnhancedMessageProcessor {
         timestamp: message.timestamp
       });
 
+      // Handle group chat expense tracking
+      if (message.from.includes('-')) { // WhatsApp group IDs contain '-'
+        await this.handleGroupExpense(message, nlpResult, userId);
+      }
+
       // Handle high stress situations
       if (nlpResult.analysis.sentiment.stressLevel > 2) {
         return this.handleStressfulSituation(nlpResult);
@@ -137,6 +143,9 @@ class EnhancedMessageProcessor {
         return this.executeCommand(command, nlpResult);
       }
 
+      // Check for reminders and notifications
+      await this.checkAndSendReminders(userId, message);
+
       // Generate response based on NLP analysis
       return this.generateResponse(nlpResult);
     } catch (error) {
@@ -145,6 +154,33 @@ class EnhancedMessageProcessor {
         text: 'Maaf, terjadi kesalahan dalam memproses pesan Anda. Silakan coba lagi.',
         error: true
       };
+    }
+  }
+
+  async checkAndSendReminders(userId, message) {
+    const notificationManager = require('./notificationManager');
+    const client = require('./enhancedSetup').getClient();
+
+    try {
+      await notificationManager.scheduleNotifications(userId, client);
+    } catch (error) {
+      logger.error('Error sending reminders:', error);
+    }
+  }
+
+  async handleGroupExpense(message, nlpResult, userId) {
+    try {
+      const groupId = message.from;
+      const amountEntity = nlpResult.analysis.enhancedResult.terms.find(term => term.original.match(/\\d+/));
+      const amount = amountEntity ? parseInt(amountEntity.original.replace(/[^\\d]/g, '')) : null;
+
+      if (amount) {
+        groupChatManager.addExpense(groupId, userId, amount);
+        const summary = await groupChatManager.generateGroupSummaryMessage(groupId);
+        await message.reply(`Pengeluaran grup tercatat.\n${summary}`);
+      }
+    } catch (error) {
+      logger.error('Error handling group expense:', error);
     }
   }
 
