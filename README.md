@@ -1,257 +1,74 @@
-# WhatsApp Financial Management Bot (Enhanced Version)
+# WhatsApp Financial Management Bot
 
-A comprehensive financial management system with advanced WhatsApp integration, featuring enhanced NLP capabilities, voice message support, and intelligent financial analysis.
+## Overview
+Sistem bot keuangan WhatsApp ini menyediakan solusi lengkap untuk pengelolaan keuangan pribadi melalui antarmuka WhatsApp dan web. Fitur utama meliputi pencatatan transaksi, pengelolaan anggaran, pelacakan tujuan keuangan, analisis keuangan canggih, serta integrasi pengingat dan notifikasi.
 
-## Enhanced Features
+## Fitur Utama
+- Pencatatan transaksi otomatis via WhatsApp dengan NLP tingkat lanjut
+- Pengelolaan anggaran dengan rekomendasi otomatis
+- Pelacakan dan gamifikasi tujuan keuangan
+- Dashboard interaktif dengan widget yang dapat dikustomisasi
+- Integrasi kalender untuk pengingat dan perencanaan keuangan
+- Fitur kolaborasi untuk keluarga atau tim keuangan
+- Notifikasi otomatis untuk tagihan, anggaran, dan aktivitas penting
+- Analisis sentimen untuk memahami kondisi keuangan pengguna
+- Keamanan tingkat tinggi dengan autentikasi dan enkripsi data
 
-### Advanced NLP Capabilities
-- Sentiment analysis for financial stress detection
-- Context-aware conversation management
-- Automatic typo correction for Indonesian language
-- Regional dialect and slang support
-- Financial terms dictionary and synonyms
+## Teknologi
+- Backend: Node.js, Express, MongoDB, WhatsApp Web.js, NLP.js, Google Speech-to-Text
+- Frontend: React, Redux, Tailwind CSS, React DnD, React Big Calendar
+- DevOps: Nodemon, PM2, Docker (opsional)
 
-### Smart Financial Features
-- ML-based expense categorization
-- Predictive spending pattern analysis
-- Personalized savings recommendations
-- Detailed goal tracking
-- Automated recurring transactions
-- Dynamic budget adjustments
+## Instalasi
+1. Clone repository
+2. Install dependencies backend dan frontend
+3. Konfigurasi file `.env` sesuai `.env.example`
+4. Jalankan MongoDB
+5. Jalankan backend: `npm run dev` di folder backend
+6. Jalankan frontend: `npm start` di folder frontend
+7. Akses aplikasi di `http://localhost:3000`
 
-### Advanced User Interaction
-- Voice message support for transaction recording
-- Receipt image scanning (coming soon)
-- Interactive buttons and list messages
-- Smart quick replies based on user history
-- Customizable reminder schedules
-- Group expense tracking
+## Pengujian
+- Backend: Unit dan integrasi menggunakan Jest dan Supertest
+- Frontend: Pengujian komponen dan E2E menggunakan React Testing Library dan Cypress
+- Pengujian manual untuk fitur WhatsApp bot dan web interface
 
-### Financial Education
-- Daily financial tips
-- Goal achievement gamification
-- Market updates and financial news
-- Investment education content
-- Debt management advice
+## Cara Penggunaan
+- Daftar dan login di web
+- Aktivasi nomor WhatsApp melalui QR code
+- Mulai catat transaksi dan kelola keuangan via WhatsApp atau web
+- Gunakan fitur pengingat dan notifikasi untuk manajemen keuangan yang lebih baik
+- Manfaatkan dashboard dan laporan untuk analisis keuangan
 
-### Integration Capabilities
-- Excel/Google Sheets/PDF export
-- QR code payment support
+## Roadmap Pengembangan
+- Peningkatan akurasi NLP dan dukungan bahasa daerah
+- Implementasi pemindaian struk belanja dengan OCR
+- Fitur obrolan grup untuk pengeluaran bersama
+- Integrasi API bank dan e-wallet
+- Fitur ekspor/impor data lanjutan
+- Autentikasi dua faktor dan keamanan tambahan
+- Optimasi performa dan skalabilitas
 
-### Enhanced Security
-- Large transaction verification
-- Suspicious activity detection
-- End-to-end encryption
-- IP-based access control
+## Kontak
+Untuk dukungan dan pertanyaan, hubungi: support@example.com
 
-### Performance Optimizations
-- Message queue system
-- Request caching
-- Response time optimization
-- Batch report processing
+---
 
-### Advanced Analytics
-- Enhanced data visualization
-- Comparative user analysis
-- Custom report builder
-- Tax calculation and reporting
-- Financial health scoring
+## Testing Commands
 
-## Prerequisites
-
-- Node.js (>= 14.0.0)
-- MongoDB
-- Google Cloud account (for Speech-to-Text)
-- WhatsApp account for bot
-- FFmpeg (for voice message processing)
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/whatsapp-financial-bot.git
-cd whatsapp-financial-bot
-```
-
-2. Install backend dependencies:
-```bash
-cd backend
-npm install
-```
-
-3. Install frontend dependencies:
-```bash
-cd frontend
-npm install
-```
-
-4. Set up environment variables:
-```bash
-cd backend
-cp .env.example .env
-```
-Edit .env with your configuration values.
-
-5. Set up Google Cloud credentials:
-- Create a project in Google Cloud Console
-- Enable Speech-to-Text API
-- Download credentials JSON file
-- Set GOOGLE_APPLICATION_CREDENTIALS in .env
-
-## Running the Application
-
-1. Start MongoDB:
-```bash
-mongod
-```
-
-2. Start the backend server:
-```bash
-cd backend
-npm run dev
-```
-
-3. Start the frontend application:
-```bash
-cd frontend
-npm start
-```
-
-4. Access the application at http://localhost:3000
-
-## WhatsApp Integration Setup
-
-1. Log in to the web interface
-2. Navigate to WhatsApp Activation
-3. Scan the QR code with your WhatsApp
-4. Start using the enhanced bot features
-
-## Enhanced Bot Commands
-
-The bot now understands natural language better, but here are some example commands:
-
-### Transaction Recording
-```
-catat pengeluaran 50rb untuk makan
-catat pemasukan 5jt dari gaji
-```
-
-### Voice Messages
-```
-[Send voice message describing transaction]
-```
-
-### Budget Management
-```
-atur budget makan 2jt
-cek sisa anggaran
-```
-
-### Goal Tracking
-```
-target menabung 10jt untuk liburan
-cek progress tabungan
-```
-
-### Financial Reports
-```
-laporan keuangan bulan ini
-analisis pengeluaran
-```
-
-## Security Features
-
-- JWT-based authentication
-- Password hashing with bcrypt
-- Rate limiting
-- Input validation
-- Session management
-- Data encryption
-- Secure WhatsApp connection
-
-## Development
-
-### Project Structure
-```
-.
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── utils/
-│   │   └── whatsapp/
-│   │       ├── nlp/
-│   │       │   ├── sentimentAnalyzer.js
-│   │       │   ├── contextManager.js
-│   │       │   ├── dialectHandler.js
-│   │       │   └── financialDictionary.js
-│   │       ├── enhancedMessageProcessor.js
-│   │       └── enhancedSetup.js
-│   └── server.js
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   ├── services/
-    │   └── utils/
-    └── package.json
-```
-
-### Running Tests
+### Backend
 ```bash
 cd backend
 npm test
 ```
 
-### Contributing
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+### Frontend
+```bash
+cd frontend
+npm test
+```
 
-## Performance Considerations
-
-- Use PM2 for process management in production
-- Enable caching for frequently accessed data
-- Monitor memory usage with WhatsApp client
-- Implement request rate limiting
-- Use connection pooling for MongoDB
-
-## Troubleshooting
-
-Common issues and solutions:
-
-1. WhatsApp Connection Issues
-   - Ensure stable internet connection
-   - Check WhatsApp session status
-   - Clear WhatsApp session and rescan QR
-
-2. Voice Message Processing
-   - Verify FFmpeg installation
-   - Check Google Cloud credentials
-   - Ensure proper audio format
-
-3. Database Connection
-   - Verify MongoDB service is running
-   - Check connection string
-   - Ensure proper authentication
-
-## Support
-
-For support:
-- Create an issue in the repository
-- Email: support@example.com
-- Documentation: [Wiki](link-to-wiki)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- WhatsApp Web.js for WhatsApp integration
-- Google Cloud for Speech-to-Text
-- NLP.js for natural language processing
-- The React and Node.js communities
+## Demo
+- Jalankan backend dan frontend
+- Gunakan WhatsApp untuk berinteraksi dengan bot
+- Gunakan web untuk manajemen dan analisis keuangan
